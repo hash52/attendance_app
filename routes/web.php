@@ -11,8 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware'=>'auth'], function () {
+    Route::get('/', 'AttendanceController@add')->name('top');
+    Route::post('/attend', 'AttendanceController@attend')->name('attend');
+    Route::post('/leave', 'AttendanceController@leave')->name('leave');
 });
 
 Auth::routes();
