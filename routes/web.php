@@ -17,6 +17,8 @@ Route::group(['middleware'=>'auth'], function () {
     Route::post('/leave', 'AttendanceController@leave')->name('leave');
 });
 
-Auth::routes();
+Route::group(['prefix'=>'admin'], function () {
+    Route::get('/', 'Admin\UserController@index')->name('admin.top');
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();

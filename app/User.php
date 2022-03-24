@@ -37,6 +37,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     
+    public function getMonthlyTotalWorkingMinutes($year, $month)
+    {
+        $minutes = 0;
+        foreach ($this->attendances()->whereYear('attend_time', '=', $year)->whereMonth('attend_time', '=', $month)->get() as $attend) {
+            $minutes += $attend->working_minutes;
+        }
+        return $minutes;
+    }
+    
     public function attendances()
     {
         return $this->hasMany('App\Attendance');
